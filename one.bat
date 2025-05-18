@@ -1,5 +1,4 @@
 @echo off
-:: Enhanced Java run script for DTNSim
 setlocal EnableDelayedExpansion
 
 :: Configuration variables
