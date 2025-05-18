@@ -36,7 +36,7 @@ public class BubbleRap implements RoutingDecisionEngine, CommunityDetectionEngin
         if (s.contains(CENTRALITY_ALG_SETTING)) {
             this.centrality = (Centrality) s.createIntializedObject(s.getSetting(CENTRALITY_ALG_SETTING));
         } else {
-            this.centrality = new AverageWinCentrality1(s);
+            this.centrality = new AverageWinCentrality(s);
         }
     }
 

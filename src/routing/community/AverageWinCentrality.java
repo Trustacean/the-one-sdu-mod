@@ -12,7 +12,7 @@ import java.util.*;
 import core.*;
 
 
-public class AverageWinCentrality1 implements Centrality {
+public class AverageWinCentrality implements Centrality {
 
 	
 	public static final String CENTRALITY_WINDOW_SETTING = "timeWindow";
@@ -35,7 +35,7 @@ public class AverageWinCentrality1 implements Centrality {
 	
 	
 	
-	public AverageWinCentrality1 (Settings s)
+	public AverageWinCentrality (Settings s)
 	{
 		if (s.contains(CENTRALITY_WINDOW_SETTING))
 			CENTRALITY_TIME_WINDOW = s.getInt(CENTRALITY_WINDOW_SETTING);
@@ -45,7 +45,7 @@ public class AverageWinCentrality1 implements Centrality {
 			EPOCH_COUNT = s.getInt(EPOCH_COUNT_SETTING);
 	}
 	
-	public AverageWinCentrality1 (AverageWinCentrality1 proto)
+	public AverageWinCentrality (AverageWinCentrality proto)
 	{
 		this.lastGlobalComputationTime = this.lastLocalComputationTime = -COMPUTE_INTERVAL;
 	}
@@ -234,7 +234,7 @@ public class AverageWinCentrality1 implements Centrality {
 	
 	public Centrality replicate()
 	{
-		return new AverageWinCentrality1(this);
+		return new AverageWinCentrality(this);
 	}
 
 
