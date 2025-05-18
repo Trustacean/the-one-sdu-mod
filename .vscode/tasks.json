@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "compile_one",
+      "command": "./compile.bat",
+      "type": "shell"
+    },
+    {
+      "label": "run_one",
+      "command": "./one.bat -b 1 ./conf/SprayAndWaitRouterUpdateForward_settings.txt",
+      "type": "shell"
+    },
+    {
+      "label": "build_and_run",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "compile_one",
+        "run_one",
+      ]
+    }
+  ]
+}

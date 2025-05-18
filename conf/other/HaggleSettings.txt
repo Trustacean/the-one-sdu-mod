@@ -1,0 +1,125 @@
+
+## Scenario settings
+#Scenario.name = Haggle3-Infocom5-normalisasivariansi
+Scenario.name = Haggle3-Infocom5-meanbuffer2
+Scenario.simulateConnections = false
+Scenario.updateInterval = 1
+# 43200s == 12h
+Scenario.endTime = 274883
+
+# 16981816 Reality 8490908
+# 274883 Haggle 3 Infocom 5
+
+
+## Interface-specific settings:
+# type : which interface class the interface belongs to
+# For different types, the sub-parameters are interface-specific
+# For SimpleBroadcastInterface, the parameters are:
+# transmitSpeed : transmit speed of the interface (bytes per second) 
+# transmitRange : range of the interface (meters)
+
+# "Bluetooth" interface for all nodes
+btInterface.type = SimpleBroadcastInterface
+# Transmit speed of 2 Mbps = 250kBps
+btInterface.transmitSpeed = 250k
+btInterface.transmitRange = 10
+btInterface.scanInterval = 120
+
+# Define number of node groups
+Scenario.nrofHostGroups = 1
+
+# Router
+Group.movementModel = StationaryMovement
+#Group.router = EpidemicRouter
+#Group.router = DecisionEngineRouter
+ProphetRouter.secondsInTimeUnit = 30
+#DecisionEngineRouter.decisionEngine = ProphetDecisionEngine
+DecisionEngineRouter.decisionEngine = fuzzy.FuzzyBasedRouter
+DecisionEngineRouter.fclSimilarity = fcl/Haggle3-Infocom5.fcl
+
+Group.bufferSize = 10M
+# 10M Haggle3 - Infocom5
+# 20M Reality
+
+# All nodes have the bluetooth interface
+Group.nrofInterfaces = 1
+Group.interface1 = btInterface
+# Walking speeds
+Group.speed = 0.5, 1.5
+
+# Message TTL of 300 minutes (5 hours)
+## TTL 24 hours=1440, 1 week= 10080, 3 weeks= 30240, 5 weeks= 50400
+Group.msgTtl = 360
+#4320 Haggle 3 infocom 5
+#10080 Reality 20160
+
+# group1 (pedestrians) specific settings
+Group1.groupID = P
+#Group1.waitTime = 0, 43800
+#Group1.waitTime = 0, 23586
+# Haggle3-Infocom5 43800
+
+Group1.nrofHosts = 41
+Group1.nodeLocation = 10, 10
+
+## Message creation parameters 
+# How many event generators
+Events.nrof = 2
+# Class of the first event generator
+Events1.class = ExternalEventsQueue
+# (following settings are specific for the MessageEventGenerator class)
+# Creation interval in seconds (one new message every 25 to 35 seconds)
+Events1.filePath = Haggle3-Infocom5.csv
+# Haggle3-Infocom5.csv
+# RealityConnectionTraceFinal.txt
+
+Events2.class = MessageEventGenerator
+# change interval to have more or less messages, see javadocs for more information.
+
+Events2.interval = 1160, 1240
+
+# 25, 30 (~120 texts/hour)
+# 290, 310 (~12 texts/hour) Reality
+# 580, 620 (~ 6 texts/hour)
+# 1160, 1240 (~ 3 texts/ hour) Haggle3 - Infocom5
+# 2320, 2480 (~ 1 texts/ hour)
+
+Events2.size = 250k,300k
+# Haggle3-Infocom5 250k,300k
+# Reality 20k 1/2 10k
+
+# range of message source/destination addresses
+Events2.hosts = 0,40
+Events2.prefix = M
+
+Events2.time = 0, 253283
+#274883 Haggle 3 infocom 5 253283
+#16981816 Reality 16377016 15772216
+
+## Movement model settings
+# seed for movement models' pseudo random number generator (default = 0)
+MovementModel.rngSeed = 1
+# World's size for Movement Models without implicit size (width, height; meters)
+MovementModel.worldSize = 100, 100
+# How long time to move hosts in the world before real simulation
+MovementModel.warmup = 1000
+
+# how many reports to load
+Report.nrofReports = 1
+# length of the warm up period (simulated seconds)
+Report.warmup = 1
+# default directory of reports (can be overridden per Report with output setting)
+#Report.reportDir = reports/FuzzyDataSet/Haggle3-Infocom5/SimilarityDataSet
+Report.reportDir = reports/FuzzyDataSet/Haggle3-Infocom5/BufferOccDataSet
+#Report.reportDir = reports/FuzzyDataSet/Haggle3-Infocom5/VarianceBufferDataSet
+#Report.reportDir = reports/FuzzyFix/Haggle3-Infocom5
+ Report classes to load
+Report.report1 = ClosenessNodeTiapWaktuReport
+#Report.report1 = ResourceNodeTiapWaktuReport
+#Report.report1 = MessageDeliveredPerContactReport
+#Report.report2 = NumberOfHopsPerMsgPerTimeReport
+#Report.report3 = PercentageMessageDeliveredPerContactReport
+#Report.report4 = LatencyPerContactReport
+#Report.report5 = OverheadPerContactReport
+#Report.report6 = NumberOfForwardReport
+#Report.report7 = MessageCopyCountReport

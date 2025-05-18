@@ -1,0 +1,85 @@
+
+## Scenario settings
+Scenario.name = HaggleInfocom5-Epidemic
+Scenario.simulateConnections = false
+Scenario.updateInterval = 1
+# 43200s == 12h
+Scenario.endTime = 274883
+# 274883
+
+
+## Interface-specific settings:
+# type : which interface class the interface belongs to
+# For different types, the sub-parameters are interface-specific
+# For SimpleBroadcastInterface, the parameters are:
+# transmitSpeed : transmit speed of the interface (bytes per second) 
+# transmitRange : range of the interface (meters)
+
+# "Bluetooth" interface for all nodes
+btInterface.type = SimpleBroadcastInterface
+# Transmit speed of 2 Mbps = 250kBps
+btInterface.transmitSpeed = 250k
+btInterface.transmitRange = 10
+btInterface.scanInterval = 120
+
+# Define number of node groups
+Scenario.nrofHostGroups = 1
+
+# Router
+Group.movementModel = StationaryMovement
+Group.router = DecisionEngineRouter
+DecisionEngineRouter.decisionEngine = EpidemicDecisionRouter
+# DecisionEngineRouter.decisionEngine = fuzzy.FuzzyBasedRouter
+# DecisionEngineRouter.fcl = fcl/FuzzyControlLanguage.fcl
+Group.bufferSize = 10M
+Group.waitTime = 0, 120
+# All nodes have the bluetooth interface
+Group.nrofInterfaces = 1
+Group.interface1 = btInterface
+# Walking speeds
+Group.speed = 0.5, 1.5
+# Message TTL of 300 minutes (5 hours)
+Group.msgTtl = 360
+
+# group1 (pedestrians) specific settings
+Group1.groupID = A
+Group1.waitTime = 0, 43800
+Group1.nrofHosts = 41
+Group1.nodeLocation = 10, 10
+
+## Message creation parameters 
+# How many event generators
+Events.nrof = 2
+# Class of the first event generator
+Events1.class = ExternalEventsQueue
+# (following settings are specific for the MessageEventGenerator class)
+# Creation interval in seconds (one new message every 25 to 35 seconds)
+Events1.filePath = Haggle3-Infocom5.csv
+
+
+Events2.class = MessageEventGenerator
+# change interval to have more or less messages, see javadocs for more information.
+Events2.interval = 1160,1240
+Events2.size = 250k,300k
+# range of message source/destination addresses
+Events2.hosts = 0,40
+Events2.prefix = M
+Events2.time = 0, 253283
+
+## Movement model settings
+# seed for movement models' pseudo random number generator (default = 0)
+MovementModel.rngSeed = 1
+# World's size for Movement Models without implicit size (width, height; meters)
+MovementModel.worldSize = 100, 100
+# How long time to move hosts in the world before real simulation
+MovementModel.warmup = 1000
+
+# how many reports to load
+Report.nrofReports = 1
+# length of the warm up period (simulated seconds)
+Report.warmup = 1
+# default directory of reports (can be overridden per Report with output setting)
+Report.reportDir = reports/FuzzyFix/HaggleInfocomFix
+# Report classes to load
+Report.report1 = MessageStatsReport
+# Report.closenessToNodeID = [0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40]

@@ -1,0 +1,281 @@
+
+# Setting test for ONE intact Connection Mode
+
+
+#Scenario information
+Scenario.name = connection-Rank
+Scenario.simulateConnections = false
+Scenario.updateInterval = 1 
+
+
+
+Scenario.endTime = 6413284
+#Scenario.endTime = 16981816
+
+
+#Scenario.endTime = 1160000
+#987529 Haggle Cam
+#274883 Haggle
+#16981816 Reality
+#6413284 Sassy
+
+Report.warmup = 1
+Scenario.nrofHostGroups = 1
+
+
+#Interfaces informations
+btInterface.type = SimpleBroadcastInterface
+btInterface.transmitSpeed = 250k
+btInterface.transmitRange = 10
+btInterface.scanInterval = 120
+
+
+#Group Information
+## Buffer Size : 200 messages of 10 K ~ 2M; 20M = unlimited
+Group.bufferSize = 20M
+
+
+### ROUTER PART
+
+## Bubble Rap (OLD VERSION as REFERENCE ONLY)
+Group.router = DecisionEngineRouter
+DecisionEngineRouter.decisionEngine = community.DistributedBubbleRap
+DecisionEngineRouter.communityDetectAlg = routing.community.KCliqueCommunityDetection
+DecisionEngineRouter.K = 5
+DecisionEngineRouter.familiarThreshold = 700
+DecisionEngineRouter.centralityAlg = routing.community.CWindowCentrality
+
+
+## Rank-Router (only intrinsic)
+#Group.router = DecisionEngineRouter
+#DecisionEngineRouter.decisionEngine = community.RANKDecisionEngine
+
+#(NO LONGER USED)
+#DecisionEngineRouter.centralityAlg = routing.community.CWindowCentrality
+#DecisionEngineRouter.centralityAlg = routing.community.SimpleWinCentrality
+
+
+#DecisionEngineRouter.centralityAlg = routing.community.AverageWinCentrality
+#DecisionEngineRouter.centralityAlg = routing.community.RandomDegreeCentrality
+#DecisionEngineRouter.centralityAlg = routing.community.KalmanDegreeCentrality
+
+
+## for RandomWalk only (NO LONGER NEEDED)
+#Group.router = DecisionEngineRouter
+#DecisionEngineRouter.decisionEngine = community.RandomWalk
+
+
+## RANK improved with FamiliarSet (Intrinsic-popularity=KalmanDegree & Social-relations=AvgDeg)
+#Group.router = DecisionEngineRouter
+#DecisionEngineRouter.decisionEngine = community.RANKDecision3
+
+#DecisionEngineRouter.centralityAlg = routing.community.KalmanAverageCentrality
+#DecisionEngineRouter.familyDetectAlg = routing.community.SimpleFamilyDetection
+#DecisionEngineRouter.familiarThreshold = 2000
+#DecisionEngineRouter.socialAlg = routing.community.SocialCentralityDetection
+#DecisionEngineRouter.socialControl = 0.8
+
+
+## Bubble Rap (NEW VERSION for AverageWinCentrality1)
+#Group.router = DecisionEngineRouter
+#DecisionEngineRouter.decisionEngine = community.BubbleRap
+#DecisionEngineRouter.communityDetectAlg = routing.community.KCliqueCommunityDetection
+#DecisionEngineRouter.K = 5
+#DecisionEngineRouter.familiarThreshold = 250000
+#DecisionEngineRouter.centralityAlg = routing.community.AverageWinCentrality1
+
+
+##TraDA with Community consideration
+#Group.router = DecisionEngineRouter
+#DecisionEngineRouter.decisionEngine = community.TraDA
+#DecisionEngineRouter.centralityAlg = routing.community.KalmanAverageCentrality1
+#DecisionEngineRouter.communityDetectAlg = routing.community.KCliqueCommunityDetection
+#DecisionEngineRouter.K = 3
+#DecisionEngineRouter.familiarThreshold = 1000
+#DecisionEngineRouter.familyDetectAlg = routing.community.SimpleFamilyDetection1
+#DecisionEngineRouter.friendshipThreshold = 4000
+#DecisionEngineRouter.socialAlg = routing.community.SocialCentralityDetection
+#DecisionEngineRouter.socialControl = 0.8
+
+
+##CASAR
+#Group.router = DecisionEngineRouter
+#DecisionEngineRouter.decisionEngine = community.CASAR
+#DecisionEngineRouter.centralityAlg = routing.community.AverageWinCentrality
+#DecisionEngineRouter.rankingAlg = routing.community.DegreeRanking
+
+
+##CASAR1 - CWin with CASAR
+#Group.router = DecisionEngineRouterRev
+#DecisionEngineRouterRev.decisionEngine = community.CASAR1
+#DecisionEngineRouterRev.centralityAlg = routing.community.AverageWinCentrality
+#DecisionEngineRouterRev.rankingAlg = routing.community.DegreeRanking
+#DecisionEngineRouterRev.bufferAlg = routing.community.AverageBuffer1
+
+
+##TraDA with CASAR
+#Group.router = DecisionEngineRouterRev
+#DecisionEngineRouterRev.decisionEngine = community.TradaCasar
+
+#DecisionEngineRouterRev.centralityAlg = routing.community.KalmanAverageCentrality
+#DecisionEngineRouterRev.familyDetectAlg = routing.community.SimpleFamilyDetection
+#DecisionEngineRouterRev.familiarThreshold = 2000
+#DecisionEngineRouterRev.socialAlg = routing.community.SocialCentralityDetection
+#DecisionEngineRouterRev.socialControl = 0.8
+
+#DecisionEngineRouterRev.rankingAlg = routing.community.DegreeRanking
+#DecisionEngineRouterRev.bufferAlg = routing.community.AverageBuffer1
+
+
+##BubbleRap with CASAR
+#Group.router = DecisionEngineRouterRev
+#DecisionEngineRouterRev.decisionEngine = community.BubbleCasar
+
+#DecisionEngineRouterRev.centralityAlg = routing.community.AverageWinCentrality1
+#DecisionEngineRouterRev.communityDetectAlg = routing.community.KCliqueCommunityDetection
+#DecisionEngineRouterRev.K = 3
+#DecisionEngineRouterRev.familiarThreshold = 3000
+
+#DecisionEngineRouterRev.rankingAlg = routing.community.DegreeRanking
+#DecisionEngineRouterRev.bufferAlg = routing.community.AverageBuffer1
+
+
+##TraDAComm with CASAR  
+#Group.router = DecisionEngineRouterRev
+#DecisionEngineRouterRev.decisionEngine = community.TradaCommCasar
+
+#DecisionEngineRouterRev.centralityAlg = routing.community.KalmanAverageCentrality1
+#DecisionEngineRouterRev.communityDetectAlg = routing.community.KCliqueCommunityDetection
+#DecisionEngineRouterRev.K = 3
+#DecisionEngineRouterRev.familiarThreshold = 3000
+#DecisionEngineRouterRev.familyDetectAlg = routing.community.SimpleFamilyDetection1
+#DecisionEngineRouterRev.friendshipThreshold = 3000
+#DecisionEngineRouterRev.socialAlg = routing.community.SocialCentralityDetection
+#DecisionEngineRouterRev.socialControl = 0.8
+#DecisionEngineRouterRev.rankingAlg = routing.community.DegreeRanking
+#DecisionEngineRouterRev.bufferAlg = routing.community.AverageBuffer1
+
+
+
+
+## TTL 24 hours=1440, 1 week= 10080, 3 weeks= 30240, 5 weeks= 50400
+Group.msgTtl = 30240
+#Group.msgTtl = 10080
+
+
+Group.nrofInterfaces = 1
+Group.interface1 = btInterface
+
+
+#Group1 Information
+Group1.groupID = A
+Group1.waitTime = 10, 30 
+Group1.speed = 0.8, 1.4
+
+Group1.nrofHosts = 25
+#36 Haggle Cam
+#41 Haggle
+#97 Reality
+#25 Sassy
+
+Group1.nodeLocation = 10, 10
+Group1.movementModel = StationaryMovement
+
+
+#How many event generator
+Events.nrof = 2
+## Trace information
+Events1.class = ExternalEventsQueue
+#Events1.filePath = RealityConnectionTraceFinal.txt
+Events1.filePath = sassy.csv
+
+#Events1.filePath = Haggle4-Cam-Imote.csv
+#RealityConnectionTraceRevised.txt
+#Haggle4-Cam-Imote.csv
+#Haggle3-Infocom5.txt 
+#RealityConnectionTraceFinal.txt
+#sassy.csv
+
+
+## Message creation parameters
+Events2.class = MessageEventGenerator
+Events2.interval = 580, 620 
+#Events2.interval = 290, 310 
+
+
+#97, 103
+# 25,30 (~120 texts/hour) 
+#290, 310 (~12 texts/hour)  for Reality
+# 580, 620 (~ 6 texts/hour) for Sassy
+Events2.size = 10k
+
+## range of message source/destination address 
+#Events2.hosts = 0, 96
+Events2.hosts = 0, 24
+
+# 0, 35 Haggle Cam
+# 0,40 Haggle
+# 0,96 Reality
+# 0,24 Sassy
+
+Events2.prefix = M
+
+# World's size for Movement Models without implicit size (width, height; meters)
+MovementModel.worldSize = 100, 100
+
+# seed for movement models' pseudo random number generator (default = 0)
+MovementModel.rngSeed = [2; 8372; 98092; 18293; 777]
+
+
+#ReportsInformations (Number of Report generated)
+#Report.nrofReports = 6
+Report.nrofReports = 4
+
+Report.reportDir = reports/SassyBubbleCasar3K3
+
+
+
+#Report classes to load
+
+#Report for Social popularity
+##Report.report1 = FamilySetDetectionReport
+#Report.report1 = MessageStatsReport
+#Report.report2 = BufferOccupancyReport
+#Report.report3 = MessageReceivedReport
+#Report.report4 = BufferOverflowReport
+#Report.report5 = BufferOccupancyArrayReport
+#Report.report6 = MessageDemandReport
+
+
+
+#Report for intrinsic popularity
+Report.report1 = MessageStatsReport
+Report.report2 = BufferOccupancyReport
+Report.report3 = MessageReceivedReport
+Report.report4 = BufferOverflowReport
+##Report.report5 = DegreeCentralityReport
+#Report.report5 = BufferOccupancyArrayReport
+##Report.report6 = BufferOccupancyEWMAReport
+#Report.report5 = MessageDemandReport
+#Report.report7 = DegreeRankingReport
+
+
+#Report for BubbleRap/TraDA-Comm
+#Report.report1 = MessageStatsReport
+#Report.report2 = BufferOccupancyReport
+#Report.report3 = MessageReceivedReport
+#Report.report4 = BufferOverflowReport
+#Report.report5 = CommunityDetectionReport
+
+
+#Report.report1 = DeliveryCentralityReport
+#Report.report2 = MessageStatsReport
+#Report.report3 = BufferOccupancyReport
+#Report.report4 = MessageReceivedReport
+
+
+#Report.report1 = UniqueEncountersReport
+#Report.report2 = TotalEncountersReport
+#Report.report4 = BufferOccupancyEWMAReport
+#Report.report3 = DegreeCentralityReport 
+#Report.report8 = CommunityDetectionReport

@@ -1,0 +1,93 @@
+##########################################################################################
+### SCENARIO SETTINGS
+##########################################################################################
+
+Scenario.name = SprayAndWait
+Scenario.simulateConnections = false
+Scenario.updateInterval = 0.1
+
+# Reality dataset end-time
+Scenario.endTime = 16981816
+
+# Define number of host groups
+Scenario.nrofHostGroups = 1
+
+##########################################################################################
+### GROUP SETTINGS
+##########################################################################################
+
+## Common Settings For All Groups
+Group.router = SprayAndWaitRouter
+Group.bufferSize = 5M
+Group.speed = 0.5, 1.5
+Group.msgTtl = 300
+Group.nrofHosts = 100
+Group.nodeLocation = 10, 10
+Group.movementModel = StationaryMovement
+
+## Specific Group Settings
+
+# Group1 (pedestrian), the only group
+Group1.groupID = p
+
+##########################################################################################
+# ROUTER CONFIGURATION
+##########################################################################################
+
+SprayAndWaitRouter.nrofCopies = 5
+SprayAndWaitRouter.binaryMode = true
+
+##########################################################################################
+# MESSAGE CREATION PARAMETERS
+##########################################################################################
+
+Events.nrof = 2
+
+## Event 1
+Events1.class = ExternalEventsQueue
+Events1.filePath = ./data/Haggle3/Haggle3-Infocom5.txt
+Events1.interval = 25,35
+Events1.size = 500k,750k
+Events1.hosts = 0,99
+Events1.prefix = E
+
+## Event 2
+Events2.class = MessageEventGenerator
+Events2.interval = 580,620
+Events2.size = 500k,750k
+Events2.hosts = 0,99
+Events2.prefix = M
+
+##########################################################################################
+### MOVEMENT MODEL SETTINGS
+##########################################################################################
+
+MovementModel.rngSeed = 1
+MovementModel.worldSize = 300, 300
+MovementModel.warmup = 1000
+MapBasedMovement.nrofMapFiles = 4
+
+MapBasedMovement.mapFile1 = data/roads.wkt
+MapBasedMovement.mapFile2 = data/main_roads.wkt
+MapBasedMovement.mapFile3 = data/pedestrian_paths.wkt
+MapBasedMovement.mapFile4 = data/shops.wkt
+
+##########################################################################################
+### Report Settings
+##########################################################################################
+
+Report.nrofReports = 3
+Report.warmup = 1
+Report.reportDir = reports/Haggle3
+
+# Report classes
+
+Report.report1 = MessageStatsReport
+Report.report2 = ContactTimesReport
+Report.report3 = PeriodicStatsReporter
+
+##########################################################################################
+# REPORT SPECIFIC SETTINGS
+##########################################################################################
+
+PeriodicStatsReporter.updateInterval = 1000
