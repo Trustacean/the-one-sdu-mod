@@ -375,7 +375,7 @@ public class Settings {
     private static String parseRunSetting(String value) {
         final String RUN_ARRAY_START = "[";
         final String RUN_ARRAY_END = "]";
-        final String RUN_ARRAY_DELIM = ";";
+        final String RUN_ARRAY_DELIM = ",";
         final int MIN_LENGTH = 3; // minimum run is one value. e.g. "[v]"
 
         if (!value.startsWith(RUN_ARRAY_START)
