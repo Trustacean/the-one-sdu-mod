@@ -1,5 +1,5 @@
-The ONE v1.4.1 - Readme
-=======================
+# The ONE Sanata Dharma University Mod
+a Modified [https://github.com/knightcode/the-one-pitt](The-ONE-pitt)
 
 The ONE is a Opportunistic Network Environment simulator which provides a
 powerful tool for generating mobility traces, running DTN messaging
@@ -7,11 +7,10 @@ simulations with different routing protocols, and visualizing both
 simulations interactively in real-time and results after their completion.
 
 
-Quick start
-===========
+# Quick start
 
-Compiling
----------
+
+## Compiling
 
 You can compile ONE from the source code using the included compile.bat
 script. That should work both in Windows and Unix/Linux environment with
@@ -33,8 +32,7 @@ Press "OK".
 Now Eclipse should be able to compile the ONE without warnings.
 
 
-Running
--------
+## Running
 
 ONE can be started using the included one.bat (for Windows) or one.sh (for
 Linux/Unix) script. Following examples assume you're using the Linux/Unix
@@ -57,8 +55,7 @@ read in the order given in the command line. Values in the later config files
 override values in earlier config files.
 
 
-Configuring
-===========
+## Configuring
 
 All simulation parameters are given using configuration files. These files
 are normal text files that contain key-value pairs. Syntax for most of the
@@ -111,8 +108,7 @@ all the simulations and run different, specific, simulations using
 different configuration files.
 
 
-Run indexing 
------------- 
+## Run indexing 
 
 Run indexing is a feature that allows you to run large amounts of
 different configurations using only single configuration file. The idea is
@@ -148,8 +144,7 @@ nominator of all array sizes is 1 (e.g., use arrays whose sizes are primes)
 paired.
 
 
-Movement models
----------------
+## Movement models
 
 Movement models govern the way nodes move in the simulation. They provide 
 coordinates, speeds and pause times for the nodes. The basic installation 
@@ -239,8 +234,7 @@ read in the MovementModel class and movement model specific settings are read
 in the respective classes. See the javadoc documentation and example 
 configuration files for details. 
 
-Routing modules and message creation
-------------------------------------
+## Routing modules and message creation
 
 Routing modules define how the messages are handled in the simulation. Six 
 different active routing modules (First Contact, Epidemic, Spray and Wait, 
@@ -276,8 +270,7 @@ The routing module to use is defined per node group with the setting
 work with other PRoPHET routers) so usually it makes sense to use the same 
 (or compatible) router for all groups.
 
-Reports
--------
+## Reports
 
 Reports can be used to create summary data of simulation runs, detailed data 
 of connections and messages, files suitable for post-processing using e.g., 
@@ -297,8 +290,7 @@ All reports have many configurable settings which can be defined using
 ReportClassName.settingKey -syntax. See javadocs of Report class and specific 
 report classes for details (look for "setting id" definitions).
 
-Host groups
------------
+## Host groups
 
 A host group is group of hosts (nodes) that shares movement and routing 
 module settings. Different groups can have different values for the settings 
@@ -307,8 +299,7 @@ be defined in the "Group" namespace and different node groups can override
 these settings or define new settings in their specific namespaces (Group1, 
 Group2, etc.). 
 
-The settings
-------------
+## The settings
 
 There are plenty of settings to configure; more than is meaningful to
 present here. See javadocs of especially report, routing and movement
@@ -316,8 +307,7 @@ model classes for details. See also included settings files for examples.
 Perhaps the most important settings are the following.
 
 
-Scenario settings:
----
+### Scenario settings:
 
 Scenario.name
 Name of the scenario. All report files are by default prefixed with this.
@@ -338,8 +328,7 @@ How many simulated seconds to simulate.
 Scenario.nrofHostGroups
 How many hosts group are present in the simulation.
 
-Interface settings (used to define the possible interfaces the nodes can have)
----
+### Interface settings (used to define the possible interfaces the nodes can have)
 
 type
 What class (from the interfaces-directory) is used for this interface
@@ -352,8 +341,7 @@ Range (meters) of the interface.
 transmitSpeed
 Transmit speed of the interface (bytes per second).
 
-Host group settings (used in Group or GroupN namespace):
----
+### Host group settings (used in Group or GroupN namespace):
 
 groupID 
 Group's identifier (a string or a character). Used as the prefix of host 
@@ -438,8 +426,7 @@ type. Type can be either circular (value 1) or ping-pong (value 2). See
 movement.map.MapRoute class for details.
 
 
-Movement model settings:
----
+### Movement model settings:
 
 MovementModel.rngSeed
 The seed for all movement models' random number generator. If the seed and 
@@ -472,8 +459,7 @@ translation so that the map's north points up in the playfield view. Also all
 POI and route files are translated to match to the map data transformation.
 
 
-Report settings:
----
+### Report settings:
 
 Report.nrofReports
 How many report modules to load. Module names are defined with settings 
@@ -493,8 +479,7 @@ report module specific so check the (java)documentation of different report
 modules for details.
 
 
-Event generator settings:
----
+### Event generator settings:
 
 Events.nrof
 How many event generators are loaded for the simulation. Event generator 
@@ -510,8 +495,7 @@ events file (using setting "filePath"). See input.StandardEventsReader class'
 javadocs for information about different external events.
 
 
-Other settings:
----
+### Other settings:
 
 Optimization.randomizeUpdateOrder
 Should the order in which the nodes' update method is called be randomized.
@@ -522,8 +506,7 @@ step.
 
 
 
-GUI
-===
+## GUI
 
 The GUI's main window is divided into three parts. The main part contains
 the playfield view (where node movement is displayed) and simulation and
@@ -571,8 +554,7 @@ stamped events. All nodes and message names in the log messages are
 buttons and you can get more information about them by clicking the
 buttons.
 
-DTN2 Reference Implementation Connectivity
-==========================================
+## DTN2 Reference Implementation Connectivity
 
 DTN2 connectivity allows bundles to be passed between the ONE and any
 number of DTN2 routers. This is done through DTN2's External Convergence
@@ -602,8 +584,8 @@ To start the simulation:
 1) Start all the dtnd router instances.
 2) Start ONE.
 
-Example Configuration (2-4 above)
----------------------------------
+## Example Configuration (2-4 above)
+
 
 Events.nrof = 1
 Events1.class = DTN2Events
@@ -638,15 +620,7 @@ Example:
 1 dtn://local-1.dtn/(.*) localhost 8801 5051
 2 dtn://local-2.dtn/(.*) localhost 8802 5052
 
-Known Issues
-------------
-
-For DTN2 connectivity related issues, you can contact teemuk@netlab.tkk.fi 
-
--Quitting dtnd router instances connected to ONE will cause ONE to quit.
-
-Toolkit
-=======
+## Toolkit
 
 The simulation package includes a folder called "toolkit" that contains 
 scripts for generating input and processing the output of the simulator. All 
