@@ -148,6 +148,12 @@ public class LABELDecisionEngine implements RoutingDecisionEngine, CommunityDete
 		return m.getTo() != thisHost;
 	}
 
+	@Override
+	public boolean shouldSendMessageToHost(Message m, DTNHost otherHost, DTNHost thisHost) {
+		// i'm just going to use the original method.
+		return this.shouldSendMessageToHost(m, otherHost);
+	}
+
 	/**
 	 * LABEL Routing works such that we only send the message to hosts in the same
 	 * local community as the message's destination.
@@ -167,6 +173,11 @@ public class LABELDecisionEngine implements RoutingDecisionEngine, CommunityDete
 
 	public boolean shouldDeleteOldMessage(Message m, DTNHost hostReportingOld) {
 		return true;
+	}
+
+	@Override
+	public void update(DTNHost thisHost) {
+
 	}
 
 	public RoutingDecisionEngine replicate() {
