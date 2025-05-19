@@ -115,6 +115,16 @@ you can define in the earlier files all the settings that are common for
 all the simulations and run different, specific, simulations using
 different configuration files.
 
+### Example Key-Value Configuration
+
+```
+Events.nrof = 1
+Events1.class = DTN2Events
+Report.nrofReports = 1
+Report.report1 = DTN2Reporter
+DTN2.configFile = cla.conf
+```
+
 More specific details about the configuration files itself can be found in
 [settings/README.md](settings/README.md).
 
@@ -189,14 +199,6 @@ To start the simulation:
 
 1) Start all the dtnd router instances.
 2) Start ONE.
-
-## Example Configuration (2-4 above)
-
-Events.nrof = 1
-Events1.class = DTN2Events
-Report.nrofReports = 1
-Report.report1 = DTN2Reporter
-DTN2.configFile = cla.conf
 
 ### DTN2 Connectivity Configuration File
 
