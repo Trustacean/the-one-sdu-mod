@@ -1,13 +1,15 @@
 # The ONE Sanata Dharma University Mod
 
-A modified [https://github.com/knightcode/the-one-pitt](The-ONE-pitt)
+A modified [The ONE Simulator](https://github.com/knightcode/the-one-pitt) 
+repository by students of Sanata Dharma University (Jarkom).
 
 The ONE is an Opportunistic Network Environment simulator that provides a
 powerful tool for generating mobility traces, running DTN messaging
 simulations with different routing protocols, and visualizing both
 simulations interactively in real-time and results after their completion.
 
-**Note:** This modern repository encourages the use of Java SDK 21 (LTS) to both compile and run the simulator.
+**Note:** This modern repository encourages the use of Java SDK 21 (LTS)
+to both compile and run the simulator.
 
 # Quick start
 
