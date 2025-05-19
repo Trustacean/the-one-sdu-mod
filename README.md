@@ -64,7 +64,7 @@ override values in earlier config files.
 All simulation parameters are given using configuration files. These files
 are normal text files that contain key-value pairs. Syntax for most of the
 variables is:
-Namespace.key = value
+`Namespace.key = value`
 
 I.e., the key is (usually) prefixed by a namespace, followed by a dot, and
 then key name. Key and value are separated by equals-sign. Namespaces
@@ -114,6 +114,9 @@ some (or even all) settings in the previous files. The idea is that
 you can define in the earlier files all the settings that are common for
 all the simulations and run different, specific, simulations using
 different configuration files.
+
+More specific details about the configuration files itself can be found in
+[settings/README.md](settings/README.md).
 
 ## Run indexing
 
