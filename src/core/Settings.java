@@ -11,12 +11,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Properties;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Interface for simulation settings stored in setting file(s). Settings class
@@ -386,15 +381,22 @@ public class Settings {
 	private static String parseRunSetting(String value) {
 		final String RUN_ARRAY_START = "[";
 		final String RUN_ARRAY_END = "]";
-		final String RUN_ARRAY_DELIM = ";";
+		final String RUN_ARRAY_DELIM = ",";
+		final String COMMENT_PREFIX = "#";
 		final int MIN_LENGTH = 3; // minimum run is one value. e.g. "[v]"
 
 		if (!value.startsWith(RUN_ARRAY_START)
 			|| !value.endsWith(RUN_ARRAY_END)
 			|| runIndex < 0
 			|| value.length() < MIN_LENGTH) {
-			return value; // standard format setting -> return
+			if (!(value.startsWith(RUN_ARRAY_START) && value.contains(COMMENT_PREFIX))) {
+				return value.split(COMMENT_PREFIX)[0].trim();
+			}
+			// continue to parse as array
 		}
+
+		// exclude comments and trim the extra spaces
+		value = value.split(COMMENT_PREFIX)[0].trim();
 
 		value = value.substring(1, value.length() - 1); // remove brackets
 		String[] valueArr = value.split(RUN_ARRAY_DELIM);
