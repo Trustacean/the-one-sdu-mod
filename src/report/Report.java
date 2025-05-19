@@ -50,7 +50,7 @@ public abstract class Report {
 	 *  integer or 0. */
 	public static final String WARMUP_S = "warmup";
 	/** Suffix of report files without explicit output */
-	public static final String OUT_SUFFIX = ".txt";
+	public static final String OUT_SUFFIX = ".csv";
 	/** Suffix for reports that are created on n second intervals */
 	public static final String INTERVALLED_FORMAT ="%04d" + OUT_SUFFIX; 
 	/** The print writer used to write output. See {@link #write(String)} */
