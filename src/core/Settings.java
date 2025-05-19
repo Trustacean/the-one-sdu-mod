@@ -38,7 +38,7 @@ public class Settings {
 	/**
 	 * file name of the default settings file ({@value})
 	 */
-	public static final String DEF_SETTINGS_FILE = "default_settings.txt";
+	public static final String DEF_SETTINGS_FILE = "settings/default_settings.cfg";
 
 	/**
 	 * Setting to define the file name where all read settings are written
