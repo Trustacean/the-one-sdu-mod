@@ -228,6 +228,11 @@ public class DTNSim {
 		return val;
 	}
 
+	/**
+	 * Parses configuration override settings passed after {@link #SETTING_DEF_FLAG}
+	 * separated by {@link #CMD_SETTING_DELIMITER}. This setting will override the
+	 * setting passed after the override definition.
+	 * */
 	private static void parseCmdSettings(String arg) {
 		String[] set;
 
