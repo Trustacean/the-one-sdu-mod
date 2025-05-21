@@ -93,7 +93,7 @@ public class Settings {
 	 * Sets the run index for the settings (only has effect on settings with run
 	 * array). A run array can be defined with syntax<BR>
 	 * <CODE>[settingFor1stRun ; settingFor2ndRun ; SettingFor3rdRun]</CODE>
-	 * <BR>I.e. settings are put in brackets and delimited with semicolon. First
+	 * <BR>I.e. settings are put in brackets and delimited with comma. First
 	 * run's setting is returned when index is 0, second when index is 1 etc. If
 	 * run index is bigger than run array's length, indexing wraps around in run
 	 * array (i.e. return value is the value at index
@@ -381,7 +381,7 @@ public class Settings {
 	private static String parseRunSetting(String value) {
 		final String RUN_ARRAY_START = "[";
 		final String RUN_ARRAY_END = "]";
-		final String RUN_ARRAY_DELIM = ",";
+		final String RUN_ARRAY_DELIM = ";";
 		final String COMMENT_PREFIX = "#";
 		final int MIN_LENGTH = 3; // minimum run is one value. e.g. "[v]"
 
