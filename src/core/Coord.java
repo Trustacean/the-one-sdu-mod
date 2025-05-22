@@ -152,4 +152,15 @@ public class Coord implements Cloneable, Comparable<Coord> {
 			return 0;
 		}
 	}
+
+	/**
+	 * Checks whether two coordinates are close enough to be considered close.
+	 * @param c1 First coordinate
+	 * @param c2 Second coordinate
+	 * @param range The range the coordinates are considered close
+	 * @return boolean
+	 */
+	public static boolean areClose(Coord c1, Coord c2, double range) {
+		return Math.abs(c1.getX() - c2.getX()) < range && Math.abs(c1.getY() - c2.getY()) < range;
+	}
 }
