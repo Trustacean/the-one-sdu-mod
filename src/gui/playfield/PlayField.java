@@ -56,6 +56,7 @@ public class PlayField extends JPanel {
 			new ArrayList<PlayFieldGraphic>());
 		this.mapGraphic = null;
 		this.showMapGraphic = false;
+		this.showNodePathTrace = false;
 		this.underlayImage = null;
 		this.imageTransform = null;
 		this.autoClearOverlay = true;
@@ -170,30 +171,25 @@ public class PlayField extends JPanel {
 		}
 
 		// draw paths and flag completed paths
-		if (showNodePathTrace) {
-			for (DTNHost h : w.getHosts()) {
-				boolean isLastPath = false;
-				Path lastPath = null;
-				for (Path path : h.getPathHistory()) {
-					// if this is the last path, draw the previous path
-					if (isLastPath) {
-						new PathGraphic(lastPath, h.getHostPathColor()).draw(g2);
+		for (DTNHost h : w.getHosts()) {
+			// make it so that the last path is drawn as a tailing path, relative to DTNHost location
+			Iterator<Path> it = h.getPathHistory().iterator();
+			while (it.hasNext()) {
+				Path path = it.next();
+				if (it.hasNext() && path.isComplete()) {
+					if (showNodePathTrace) {
+						new PathGraphic(path, h.getHostPathColor()).draw(g2);
 					}
-					// flag the last path for playfield drawing
-					isLastPath = !path.isComplete();
-					// set the last path as the current path
-					lastPath = path;
-				}
-
-				// draw the last path, relative to the host location
-				if (isLastPath) {
+				} else {
 					Path tailingPath = new Path();
 					tailingPath.addWaypoint(h.getLocation()); // start from the host
-					tailingPath.addWaypoint(lastPath.getFirstWaypoint().clone());
-					new PathGraphic(tailingPath, h.getHostPathColor()).draw(g2);
-					// complete path when within range
-					if (Coord.areClose(h.getLocation(), lastPath.getLastWaypoint(), 75)) {
-						lastPath.setComplete();
+					tailingPath.addWaypoint(path.getFirstWaypoint().clone());
+					if (showNodePathTrace) {
+						new PathGraphic(tailingPath, h.getHostPathColor()).draw(g2);
+					}
+					// host is close to the last waypoint of the path, flag it as completed
+					if (Coord.areClose(h.getLocation(), path.getLastWaypoint(), 75)) {
+						path.setComplete();
 					}
 				}
 			}
