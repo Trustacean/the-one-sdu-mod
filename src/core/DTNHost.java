@@ -460,6 +460,9 @@ public class DTNHost implements Comparable<DTNHost> {
             }
         }
 
+        /* Path trace purposes: adds the current path to the history */
+        pathHistory.add(path);
+
         return true;
     }
 
