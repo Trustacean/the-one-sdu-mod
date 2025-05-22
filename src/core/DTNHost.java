@@ -4,8 +4,12 @@
  */
 package core;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
 import movement.MovementModel;
 import movement.Path;
 import routing.MessageRouter;
@@ -35,6 +39,10 @@ public class DTNHost implements Comparable<DTNHost> {
     private List<MovementListener> movListeners;
     private List<NetworkInterface> net;
     private ModuleCommunicationBus comBus;
+
+    /* Path tracing purposes */
+    @Getter @Setter private List<Path> pathHistory;
+	@Getter @Setter private Color hostPathColor;
 
     // tambahan testing
     public List<Duration> intervals;
@@ -105,6 +113,10 @@ public class DTNHost implements Comparable<DTNHost> {
                 l.initialLocation(this, this.location);
             }
         }
+
+        /* Path tracing purposes */
+        this.pathHistory = new LinkedList<>();
+        this.hostPathColor = generateRandomColor();
 
         // tambahan
         // this.setNode = new HashSet<DTNHost>();
@@ -448,6 +460,9 @@ public class DTNHost implements Comparable<DTNHost> {
             }
         }
 
+        /* Path trace purposes: adds the current path to the history */
+        pathHistory.add(path);
+
         return true;
     }
 
@@ -563,7 +578,15 @@ public class DTNHost implements Comparable<DTNHost> {
         return this.getAddress() - h.getAddress();
     }
 
-    /**
+    private Color generateRandomColor() {
+        Random rand = new Random();
+        int r = rand.nextInt(256);
+        int g = rand.nextInt(256);
+        int b = rand.nextInt(256);
+        return new Color(r, g, b);
+    }
+
+	/**
      * Method tambahan untuk menambah Duration ke list
      */
     public void addDuration(Duration dur) {
