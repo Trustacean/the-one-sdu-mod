@@ -10,12 +10,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JPanel;
 
+import lombok.Setter;
 import movement.Path;
 import movement.map.SimMap;
 import core.Coord;
@@ -33,6 +32,7 @@ public class PlayField extends JPanel {
 	private List<PlayFieldGraphic> overlayGraphics;
 	private boolean autoClearOverlay;	// automatically clear overlay graphics
 	private MapGraphic mapGraphic;
+	@Setter	private boolean showNodePathTrace;
 	private boolean showMapGraphic;
 	private ScaleReferenceGraphic refGraphic;
 	
@@ -54,6 +54,7 @@ public class PlayField extends JPanel {
         this.overlayGraphics = Collections.synchronizedList(
         		new ArrayList<PlayFieldGraphic>());
         this.mapGraphic = null;
+		this.showMapGraphic = false;
         this.underlayImage = null;
         this.imageTransform = null;
         this.autoClearOverlay = true;
@@ -159,6 +160,31 @@ public class PlayField extends JPanel {
 		// draw hosts
 		for (DTNHost h : w.getHosts()) {
 			new NodeGraphic(h).draw(g2); // TODO: Optimization..?
+		}
+
+		// draw paths and flag completed paths
+		for (DTNHost h : w.getHosts()) {
+			// make it so that the last path is drawn as a tailing path, relative to DTNHost location
+			Iterator<Path> it = new LinkedList<>(h.getPathHistory()).iterator();
+			while (it.hasNext()) {
+				Path path = it.next();
+				if (it.hasNext() && path.isComplete()) {
+					if (showNodePathTrace) {
+						new PathGraphic(path, h.getHostPathColor()).draw(g2);
+					}
+				} else {
+					Path tailingPath = new Path();
+					tailingPath.addWaypoint(h.getLocation()); // start from the host
+					tailingPath.addWaypoint(path.getFirstWaypoint().clone());
+					if (showNodePathTrace) {
+						new PathGraphic(tailingPath, h.getHostPathColor()).draw(g2);
+					}
+					// host is close to the last waypoint of the path, flag it as completed
+					if (Coord.areClose(h.getLocation(), path.getLastWaypoint(), 75)) {
+						path.setComplete();
+					}
+				}
+			}
 		}
 		
 		// draw overlay graphics
