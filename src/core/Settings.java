@@ -372,6 +372,14 @@ public class Settings {
 		return value;
 	}
 
+	public String getSetting(String name, String defaultValue) {
+		try {
+			return getSetting(name);
+		} catch (SettingsError e) {
+			return defaultValue;
+		}
+	}
+
 	/**
 	 * Parses run-specific settings from a String value
 	 *
@@ -432,6 +440,14 @@ public class Settings {
 	 */
 	public double getDouble(String name) {
 		return parseDouble(getSetting(name), name);
+	}
+
+	public double getDouble(String name, double defaultValue) {
+		try {
+			return getDouble(name);
+		} catch (SettingsError e) {
+			return defaultValue;
+		}
 	}
 
 	/**
@@ -603,6 +619,14 @@ public class Settings {
 		return convertToInt(getDouble(name), name);
 	}
 
+	public int getInt(String name, int defaultValue) {
+		try {
+			return convertToInt(getDouble(name), name);
+		} catch (SettingsError e) {
+			return defaultValue;
+		}
+	}
+
 	/**
 	 * Converts a double value that is supposedly equal to an integer value to
 	 * an integer value.
@@ -650,6 +674,14 @@ public class Settings {
 		}
 
 		return value;
+	}
+
+	public boolean getBoolean(String name, boolean defaultValue) {
+		try {
+			return getBoolean(name);
+		} catch (SettingsError e) {
+			return defaultValue;
+		}
 	}
 
 	/**
