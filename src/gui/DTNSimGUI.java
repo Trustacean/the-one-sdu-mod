@@ -62,7 +62,7 @@ public class DTNSimGUI extends DTNSimUI {
 		boolean trailsEnabled = guiSettings.getBoolean("nodeTrailEnabled", false);
 		int trailMaxLength = guiSettings.getInt("nodeTrailLength", 50);
 		String trailColorStr = guiSettings.getSetting("nodeTrailColor", "#808080");
-		boolean trailFade = guiSettings.getBoolean("nodeTrailFadeEnabled", false);
+		boolean trailFade = guiSettings.getBoolean("nodeTrailFadeEnabled", true);
 
 		// optionally not process trails to save CPU time
 		NodeGraphic.processTrails(processTrails);
