@@ -103,6 +103,7 @@ public class DTNSimGUI extends DTNSimUI {
 			}
 		});
 
+		this.main.setLocationRelativeTo(null);
 		this.main.setVisible(true);
 	}
 
