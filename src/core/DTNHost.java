@@ -40,10 +40,6 @@ public class DTNHost implements Comparable<DTNHost> {
     private List<NetworkInterface> net;
     private ModuleCommunicationBus comBus;
 
-    /* Path tracing purposes */
-    @Getter @Setter private List<Path> pathHistory;
-	@Getter @Setter private Color hostPathColor;
-
     // tambahan testing
     public List<Duration> intervals;
     public List<Double> congestionRatio = new ArrayList<Double>();
@@ -113,10 +109,6 @@ public class DTNHost implements Comparable<DTNHost> {
                 l.initialLocation(this, this.location);
             }
         }
-
-        /* Path tracing purposes */
-        this.pathHistory = new LinkedList<>();
-        this.hostPathColor = generateRandomColor();
 
         // tambahan
         // this.setNode = new HashSet<DTNHost>();
@@ -460,9 +452,6 @@ public class DTNHost implements Comparable<DTNHost> {
             }
         }
 
-        /* Path trace purposes: adds the current path to the history */
-        pathHistory.add(path);
-
         return true;
     }
 
@@ -576,14 +565,6 @@ public class DTNHost implements Comparable<DTNHost> {
      */
     public int compareTo(DTNHost h) {
         return this.getAddress() - h.getAddress();
-    }
-
-    private Color generateRandomColor() {
-        Random rand = new Random();
-        int r = rand.nextInt(256);
-        int g = rand.nextInt(256);
-        int b = rand.nextInt(256);
-        return new Color(r, g, b);
     }
 
 	/**

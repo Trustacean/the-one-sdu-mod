@@ -19,9 +19,7 @@ public class Path  {
 	private List<Double> speeds;
 	/** Storing the index of the next waypoint coordinate */
 	private int nextWpIndex;
-	/** Flag variable to check whether the node has completely traveled this path */
-	private boolean isComplete;
-	
+
 	/**
 	 * Creates a path with zero speed.
 	 */
@@ -29,7 +27,6 @@ public class Path  {
 		this.nextWpIndex = 0;
 		this.coords = new ArrayList<Coord>();
 		this.speeds = new ArrayList<Double>(1);
-		this.isComplete = false;
 	}
 
 	/**
@@ -41,7 +38,6 @@ public class Path  {
 		this.nextWpIndex = path.nextWpIndex;
 		this.coords = new ArrayList<Coord>((ArrayList<Coord>)path.coords);
 		this.speeds = new ArrayList<Double>((ArrayList<Double>)path.speeds);
-		this.isComplete = path.isComplete;
 	}
 	
 	/**
@@ -117,21 +113,6 @@ public class Path  {
 		return coords.getLast();
 	}
 
-	/**
-	 * Returns true if the path has been completely traveled.
-	 * @return boolean
-	 */
-	public boolean isComplete() {
-		return this.isComplete;
-	}
-
-	/**
-	 * Sets the path as completely traveled.
-	 */
-	public void setComplete() {
-		this.isComplete = true;
-	}
-	
 	/**
 	 * Returns true if the path has more waypoints, false if not
 	 * @return true if the path has more waypoints, false if not
