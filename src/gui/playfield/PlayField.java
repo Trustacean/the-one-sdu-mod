@@ -4,35 +4,39 @@
  */
 package gui.playfield;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.util.*;
-
-import javax.swing.JPanel;
-
-import lombok.Setter;
-import movement.Path;
-import movement.map.SimMap;
 import core.Coord;
 import core.DTNHost;
 import core.World;
+import gui.DTNSimGUI;
+import lombok.Getter;
+import lombok.Setter;
+import movement.Path;
+import movement.map.SimMap;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.util.*;
+import java.util.List;
 
 /**
  * The canvas where node graphics and message visualizations are drawn.
  */
 public class PlayField extends JPanel {
+	public static final int PLAYFIELD_OFFSET = 10;
+
 	private World w;
+	private final DTNSimGUI gui;
+
 	private Color bgColor = Color.WHITE;
 
 	private List<PlayFieldGraphic> overlayGraphics;
 	private boolean autoClearOverlay;    // automatically clear overlay graphics
 	private MapGraphic mapGraphic;
+	@Getter
 	@Setter
-	private boolean showNodePathTrace;
+	private boolean showNodeTrails;
 	private boolean showMapGraphic;
 	private ScaleReferenceGraphic refGraphic;
 
@@ -42,31 +46,57 @@ public class PlayField extends JPanel {
 	private double underlayImgDx;
 	private double underlayImgDy;
 
+	private Map<DTNHost, NodeGraphic> activeNodeGraphics;
+
 	/**
 	 * Creates a playfield
 	 *
 	 * @param w The world that contains the actors to be drawn
 	 */
-	public PlayField(World w) {
+	public PlayField(World w, DTNSimGUI gui) {
 		this.w = w;
+		this.gui = gui;
+
 		this.refGraphic = new ScaleReferenceGraphic();
 		updateFieldSize();
 		this.setBackground(bgColor);
 		this.overlayGraphics = Collections.synchronizedList(
 			new ArrayList<PlayFieldGraphic>());
 		this.mapGraphic = null;
-		this.showMapGraphic = false;
-		this.showNodePathTrace = false;
 		this.underlayImage = null;
 		this.imageTransform = null;
 		this.autoClearOverlay = true;
+		this.activeNodeGraphics = new HashMap<>();
+
+		synchronizeNodeGraphics();
 	}
 
 	/**
 	 * Schedule the play field to be drawn
 	 */
 	public void updateField() {
+		synchronizeNodeGraphics();
+
 		this.repaint();
+	}
+
+	/**
+	 * Synchronizes the activeNodeGraphics map with the current hosts in the world.
+	 * Creates NodeGraphic objects for new hosts and removes them for hosts that no
+	 * longer exist.
+	 */
+	private void synchronizeNodeGraphics() {
+		List<DTNHost> currentHosts = w.getHosts();
+		Map<DTNHost, NodeGraphic> newActiveNodeGraphics = new HashMap<>();
+
+		for (DTNHost host : currentHosts) {
+			if (activeNodeGraphics.containsKey(host)) {
+				newActiveNodeGraphics.put(host, activeNodeGraphics.get(host));
+			} else {
+				newActiveNodeGraphics.put(host, new NodeGraphic(host));
+			}
+		}
+		activeNodeGraphics = newActiveNodeGraphics;
 	}
 
 	/**
@@ -151,58 +181,42 @@ public class PlayField extends JPanel {
 	 * @param g The graphics context to draw the field to
 	 */
 	public void paint(Graphics g) {
+
 		Graphics2D g2 = (Graphics2D) g;
+
 		g2.setBackground(bgColor);
 
-		// clear old playfield graphics
-		g2.clearRect(0, 0, this.getWidth(), this.getHeight());
-		if (underlayImage != null) {
+		g2.translate(PLAYFIELD_OFFSET, PLAYFIELD_OFFSET);
+
+		g2.clearRect(-PLAYFIELD_OFFSET, -PLAYFIELD_OFFSET,
+			this.getWidth(),
+			this.getHeight());
+
+		if (underlayImage != null && curTransform != null) {
 			g2.drawImage(underlayImage, curTransform, null);
 		}
 
-		// draw map (is exists and drawing requested)
 		if (mapGraphic != null && showMapGraphic) {
 			mapGraphic.draw(g2);
 		}
 
-		// draw hosts
-		for (DTNHost h : w.getHosts()) {
-			new NodeGraphic(h).draw(g2); // TODO: Optimization..?
+		if (activeNodeGraphics != null) {
+			for (NodeGraphic ng : activeNodeGraphics.values()) {
+				ng.draw(g2);
+			}
 		}
 
-		// draw paths and flag completed paths
-		for (DTNHost h : w.getHosts()) {
-			// make it so that the last path is drawn as a tailing path, relative to DTNHost location
-			Iterator<Path> it = h.getPathHistory().iterator();
-			while (it.hasNext()) {
-				Path path = it.next();
-				if (it.hasNext() && path.isComplete()) {
-					if (showNodePathTrace) {
-						new PathGraphic(path, h.getHostPathColor()).draw(g2);
-					}
-				} else {
-					Path tailingPath = new Path();
-					tailingPath.addWaypoint(h.getLocation()); // start from the host
-					tailingPath.addWaypoint(path.getFirstWaypoint().clone());
-					if (showNodePathTrace) {
-						new PathGraphic(tailingPath, h.getHostPathColor()).draw(g2);
-					}
-					// host is close to the last waypoint of the path, flag it as completed
-					if (Coord.areClose(h.getLocation(), path.getLastWaypoint(), 75)) {
-						path.setComplete();
-					}
+		if (overlayGraphics != null) {
+			synchronized (overlayGraphics) {
+				for (PlayFieldGraphic overlay : overlayGraphics) {
+					overlay.draw(g2);
 				}
 			}
 		}
 
-
-		// draw overlay graphics
-		for (int i = 0, n = overlayGraphics.size(); i < n; i++) {
-			overlayGraphics.get(i).draw(g2);
+		if (refGraphic != null) {
+			this.refGraphic.draw(g2);
 		}
-
-		// draw reference scale
-		this.refGraphic.draw(g2);
 	}
 
 
@@ -288,5 +302,4 @@ public class PlayField extends JPanel {
 		this.setPreferredSize(minSize);
 		this.setSize(minSize);
 	}
-
 }
