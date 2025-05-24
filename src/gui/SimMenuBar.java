@@ -49,7 +49,7 @@ public class SimMenuBar extends JMenuBar implements ActionListener {
 	private JCheckBoxMenuItem enableNodeName;
 	private JCheckBoxMenuItem enableNodeCoverage;
 	private JCheckBoxMenuItem enableNodeConnections;
-	private JCheckBoxMenuItem enableNodePathTrace;
+	private JCheckBoxMenuItem enableNodeTrails;
 	private JCheckBoxMenuItem enableMapGraphic;
 	private JCheckBoxMenuItem autoClearOverlay;
 	private JMenuItem clearOverlay;
@@ -75,7 +75,7 @@ public class SimMenuBar extends JMenuBar implements ActionListener {
 		enableNodeName = createCheckItem(pfMenu, "Show node name string",true);
 		enableNodeCoverage = createCheckItem(pfMenu, "Show node radio coverage", true);
 		enableNodeConnections = createCheckItem(pfMenu,	"Show node's connections", true);
-		enableNodePathTrace = createCheckItem(pfMenu, "Show node path trace (laggy)", false);
+		enableNodeTrails = createCheckItem(pfMenu, "Show node trails (slower)", false);
 		enableMapGraphic = createCheckItem(pfMenu,"Show map graphic",true);
 		autoClearOverlay = createCheckItem(pfMenu, "Autoclear overlay",true);
 		clearOverlay = createMenuItem(pfMenu,"Clear overlays now");
@@ -115,8 +115,9 @@ public class SimMenuBar extends JMenuBar implements ActionListener {
 		else if (source == this.enableNodeConnections) {
 			gui.playfield.NodeGraphic.setDrawConnections(enableNodeConnections.isSelected());
 		}
-		else if (source == this.enableNodePathTrace) {
-			field.setShowNodePathTrace(enableNodePathTrace.isSelected());
+		else if (source == this.enableNodeTrails) {
+			field.setShowNodeTrails(enableNodeTrails.isSelected());
+			gui.playfield.NodeGraphic.setIsTrailEnabled(enableNodeTrails.isSelected());
 		}
 		else if (source == this.enableMapGraphic) {
 			field.setShowMapGraphic(enableMapGraphic.isSelected());
