@@ -270,8 +270,8 @@ public class PlayField extends JPanel {
 	 */
 	public Coord getGraphicsPosition(Coord loc) {
 		Coord c = loc.clone();
-		c.setLocation(PlayFieldGraphic.scale(c.getX()),
-			PlayFieldGraphic.scale(c.getY()));
+		c.setLocation(PlayFieldGraphic.scale(c.getX()) + PLAYFIELD_OFFSET,
+			PlayFieldGraphic.scale(c.getY()) + PLAYFIELD_OFFSET);
 		return c;
 	}
 
@@ -285,8 +285,8 @@ public class PlayField extends JPanel {
 	 */
 	public Coord getWorldPosition(Coord loc) {
 		Coord c = loc.clone();
-		c.setLocation(PlayFieldGraphic.invScale(c.getX()),
-			PlayFieldGraphic.invScale(c.getY()));
+		c.setLocation(PlayFieldGraphic.invScale(c.getX() - PLAYFIELD_OFFSET),
+			PlayFieldGraphic.invScale(c.getY() - PLAYFIELD_OFFSET));
 		return c;
 	}
 
