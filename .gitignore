@@ -1,3 +1,5 @@
+.vscode
+
 /target
 /reports
 # Ignore Gradle project-specific cache directory
