@@ -4,8 +4,12 @@
  */
 package core;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
 import movement.MovementModel;
 import movement.Path;
 import routing.MessageRouter;
@@ -31,6 +35,7 @@ public class DTNHost implements Comparable<DTNHost> {
     private double speed;
     private double nextTimeToMove;
     private String name;
+    private int[] color;
     private List<MessageListener> msgListeners;
     private List<MovementListener> movListeners;
     private List<NetworkInterface> net;
@@ -248,6 +253,15 @@ public class DTNHost implements Comparable<DTNHost> {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Sets the Node's color overriding the default color
+     *  
+     * @param color The color to set
+     */
+    public void setColor(int[] color) {
+        this.color = color;
     }
 
     /**
@@ -544,6 +558,15 @@ public class DTNHost implements Comparable<DTNHost> {
     }
 
     /**
+     * Returns the color of this host
+     *
+     * @return The color of this host
+     */
+    public int[] getColor() {
+        return this.color;
+    }
+
+    /**
      * Checks if a host is the same as this host by comparing the object
      * reference
      *
@@ -563,7 +586,7 @@ public class DTNHost implements Comparable<DTNHost> {
         return this.getAddress() - h.getAddress();
     }
 
-    /**
+	/**
      * Method tambahan untuk menambah Duration ke list
      */
     public void addDuration(Duration dur) {

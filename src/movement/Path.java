@@ -17,8 +17,9 @@ public class Path  {
 	private List<Coord> coords;
 	/** speeds in the path legs */
 	private List<Double> speeds;
+	/** Storing the index of the next waypoint coordinate */
 	private int nextWpIndex;
-	
+
 	/**
 	 * Creates a path with zero speed.
 	 */
@@ -93,7 +94,25 @@ public class Path  {
 		assert hasNext() : "Path didn't have " + (nextWpIndex+1) + ". waypoint";
 		return coords.get(nextWpIndex++);
 	}
-	
+
+	/**
+	 * Returns the first waypoint on this path.
+	 * @return the first waypoint
+	 */
+	public Coord getFirstWaypoint() {
+		assert hasNext() : "Path didn't have " + (nextWpIndex+1) + ". waypoint";
+		return coords.getFirst();
+	}
+
+	/**
+	 * Returns the last waypoint on this path.
+	 * @return the last waypoint
+	 */
+	public Coord getLastWaypoint() {
+		assert nextWpIndex != 0 : "No waypoint asked";
+		return coords.getLast();
+	}
+
 	/**
 	 * Returns true if the path has more waypoints, false if not
 	 * @return true if the path has more waypoints, false if not

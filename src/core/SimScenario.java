@@ -72,6 +72,8 @@ public class SimScenario implements Serializable {
 	public static final String INTERFACENAME_S = "interface";
 	/** application name in the group -setting id ({@value})*/
 	public static final String GAPPNAME_S = "application";
+	/** group colors in the group -setting id ({@value}) */
+	public static final String GROUP_COLOR_S = "color";
 
 	/** package where to look for movement models */
 	private static final String MM_PACKAGE = "movement.";
@@ -336,6 +338,10 @@ public class SimScenario implements Serializable {
 			int nrofHosts = s.getInt(NROF_HOSTS_S);
 			int nrofInterfaces = s.getInt(NROF_INTERF_S);
 			int appCount;
+			int[] gColor = null;
+			if (s.contains(GROUP_COLOR_S)) {
+				 gColor = s.getCsvInts(GROUP_COLOR_S);
+			}
 
 			// creates prototypes of MessageRouter and MovementModel
 			MovementModel mmProto = 
@@ -403,6 +409,7 @@ public class SimScenario implements Serializable {
 				DTNHost host = new DTNHost(this.messageListeners, 
 						this.movementListeners,	gid, mmNetInterfaces, comBus, 
 						mmProto, mRouterProto);
+				host.setColor(gColor);
 				hosts.add(host);
 			}
 		}

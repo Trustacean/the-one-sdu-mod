@@ -49,6 +49,7 @@ public class SimMenuBar extends JMenuBar implements ActionListener {
 	private JCheckBoxMenuItem enableNodeName;
 	private JCheckBoxMenuItem enableNodeCoverage;
 	private JCheckBoxMenuItem enableNodeConnections;
+	private JCheckBoxMenuItem enableNodeTrails;
 	private JCheckBoxMenuItem enableMapGraphic;
 	private JCheckBoxMenuItem autoClearOverlay;
 	private JMenuItem clearOverlay;
@@ -72,10 +73,9 @@ public class SimMenuBar extends JMenuBar implements ActionListener {
 			enableBgImage = createCheckItem(pfMenu,"Show underlay image",false);
 		}
 		enableNodeName = createCheckItem(pfMenu, "Show node name string",true);
-		enableNodeCoverage = createCheckItem(pfMenu, 
-				"Show node radio coverage", true);
-		enableNodeConnections = createCheckItem(pfMenu,
-				"Show node's connections", true);
+		enableNodeCoverage = createCheckItem(pfMenu, "Show node radio coverage", true);
+		enableNodeConnections = createCheckItem(pfMenu,	"Show node's connections", true);
+		enableNodeTrails = createCheckItem(pfMenu, "Show node trails (slower)", false);
 		enableMapGraphic = createCheckItem(pfMenu,"Show map graphic",true);
 		autoClearOverlay = createCheckItem(pfMenu, "Autoclear overlay",true);
 		clearOverlay = createMenuItem(pfMenu,"Clear overlays now");
@@ -107,16 +107,17 @@ public class SimMenuBar extends JMenuBar implements ActionListener {
 			toggleUnderlayImage();
 		}
 		else if (source == this.enableNodeName) {
-			gui.playfield.NodeGraphic.setDrawNodeName(
-					enableNodeName.isSelected());
+			gui.playfield.NodeGraphic.setDrawNodeName(enableNodeName.isSelected());
 		}
 		else if (source == this.enableNodeCoverage) {
-			gui.playfield.NodeGraphic.setDrawCoverage(
-					enableNodeCoverage.isSelected());
+			gui.playfield.NodeGraphic.setDrawCoverage(enableNodeCoverage.isSelected());
 		}
 		else if (source == this.enableNodeConnections) {
-			gui.playfield.NodeGraphic.setDrawConnections(
-					enableNodeConnections.isSelected());
+			gui.playfield.NodeGraphic.setDrawConnections(enableNodeConnections.isSelected());
+		}
+		else if (source == this.enableNodeTrails) {
+			field.setShowNodeTrails(enableNodeTrails.isSelected());
+			gui.playfield.NodeGraphic.setIsTrailEnabled(enableNodeTrails.isSelected());
 		}
 		else if (source == this.enableMapGraphic) {
 			field.setShowMapGraphic(enableMapGraphic.isSelected());
@@ -128,8 +129,8 @@ public class SimMenuBar extends JMenuBar implements ActionListener {
 			field.clearOverlays();
 		}
 		else if (source == this.about) {
-			JOptionPane.showMessageDialog(this, ABOUT_TEXT, ABOUT_TITLE, 
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane
+				.showMessageDialog(this, ABOUT_TEXT, ABOUT_TITLE, JOptionPane.INFORMATION_MESSAGE);
 		}
 		
 	}

@@ -16,7 +16,8 @@ import core.Coord;
  *
  */
 public class PathGraphic extends PlayFieldGraphic {
-	private final static Color PATH_COLOR = Color.RED;
+	private final static Color DEFAULT_PATH_COLOR = Color.RED;
+	private Color pathColor;
 	private List<Coord> coords;
 	
 	public PathGraphic(Path path) {
@@ -27,6 +28,17 @@ public class PathGraphic extends PlayFieldGraphic {
 			this.coords = path.getCoords();
 			assert this.coords != null && this.coords.size() > 0 : 
 			"No coordinates in the path (" + path + ")";
+		}
+	}
+
+	/** Constructor with {@link #pathColor}. */
+	public PathGraphic(Path path, Color pathColor) {
+		this(path);
+		if (pathColor != null) {
+			this.pathColor = pathColor;
+		}
+		else {
+			this.pathColor = DEFAULT_PATH_COLOR;
 		}
 	}
 	
@@ -40,7 +52,7 @@ public class PathGraphic extends PlayFieldGraphic {
 			return;
 		}
 		
-		g2.setColor(PATH_COLOR);
+		g2.setColor(pathColor);
 		Coord prev = coords.get(0);
 		
 		for (int i=1, n=coords.size(); i < n; i++) {
