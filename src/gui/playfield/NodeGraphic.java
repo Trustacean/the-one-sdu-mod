@@ -140,7 +140,12 @@ public class NodeGraphic extends PlayFieldGraphic {
 		g2.drawRect(scale(loc.getX() - 1), scale(loc.getY() - 1), scale(2), scale(2));
 
 		if (drawNodeName) {
-			g2.setColor(hostNameColor);
+			if (node.getColor() == null) {
+				g2.setColor(hostNameColor);
+			}
+			else {
+					g2.setColor(new Color(node.getColor()[0], node.getColor()[1], node.getColor()[2]));
+			}
 			// Draw node's address next to it
 			g2.drawString(node.toString(), scale(loc.getX()),
 				scale(loc.getY()));

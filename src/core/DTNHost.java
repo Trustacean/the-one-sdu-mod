@@ -35,6 +35,7 @@ public class DTNHost implements Comparable<DTNHost> {
     private double speed;
     private double nextTimeToMove;
     private String name;
+    private int[] color;
     private List<MessageListener> msgListeners;
     private List<MovementListener> movListeners;
     private List<NetworkInterface> net;
@@ -252,6 +253,15 @@ public class DTNHost implements Comparable<DTNHost> {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Sets the Node's color overriding the default color
+     *  
+     * @param color The color to set
+     */
+    public void setColor(int[] color) {
+        this.color = color;
     }
 
     /**
@@ -545,6 +555,15 @@ public class DTNHost implements Comparable<DTNHost> {
      */
     public String toString() {
         return name;
+    }
+
+    /**
+     * Returns the color of this host
+     *
+     * @return The color of this host
+     */
+    public int[] getColor() {
+        return this.color;
     }
 
     /**
