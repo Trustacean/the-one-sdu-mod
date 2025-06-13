@@ -1,4 +1,6 @@
+# User-specific locally generated configurations
 .vscode
+.idea
 
 /target
 /reports
